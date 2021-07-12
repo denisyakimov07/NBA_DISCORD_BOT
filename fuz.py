@@ -8,7 +8,7 @@ def spelling_check(names_list, name):
         score_test_result = fuzz.ratio(name_from_list.lower(), name.lower())
         if score_test_result == 100:
             return [name_from_list]
-        elif score_test_result > 70:
+        elif score_test_result > 80:
             matches_names_list.append(name_from_list)
 
     return matches_names_list

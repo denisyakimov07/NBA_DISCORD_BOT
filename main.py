@@ -16,6 +16,7 @@ async def name(ctx: discord.ext.commands.Context):
     matches_names_list = spelling_check(names_list=get_player_name_and_list_from_db(), name=player_name)
     for i in get_user_list_data(matches_names_list):
         await ctx.send(i)
+        await ctx.send("*************")
 
 
 
