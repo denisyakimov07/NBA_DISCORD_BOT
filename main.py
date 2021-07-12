@@ -9,8 +9,8 @@ client = commands.Bot(command_prefix='!')
 
 
 @client.command()
-@commands.has_permissions(manage_channels=True)
-async def name(ctx: discord.ext.commands.Context, amount=0):
+
+async def name(ctx: discord.ext.commands.Context):
     print(ctx)
     # await ctx.channel.purge(limit=amount + 1)
 
@@ -18,7 +18,7 @@ async def name(ctx: discord.ext.commands.Context, amount=0):
 
 @client.event
 async def on_ready():
-    print('ready-v0.01')
+    print('ready-v0.02')
 
 
 if __name__ == '__main__':
