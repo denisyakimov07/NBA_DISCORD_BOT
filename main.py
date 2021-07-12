@@ -25,7 +25,7 @@ async def name(ctx: discord.ext.commands.Context):
 
 @client.event
 async def on_ready():
-    print('ready-v0.04.2')
+    print('ready-v0.04.5')
 
 
 if __name__ == '__main__':
