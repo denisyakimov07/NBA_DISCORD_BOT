@@ -9,31 +9,31 @@ tzinfo = datetime.timezone(datetime.timedelta(hours=timezone_offset))
 
 
 def player_data_card(player):
-    embed = discord.Embed(title=f"{player.player_name[0]}",
+    embed = discord.Embed(title=f"{player.player_name}",
                                   colour=discord.Colour(0x9f57a8),
-                                  url=f"{player.url[0]}",
-                                  description=f"```{player.player_position[0]} - {player.player_shoots[0]}```",
+                                  url=f"{player.url}",
+                                  description=f"```{player.player_position[0]} - {player.player_shoots}```",
                                   timestamp=datetime.datetime.utcfromtimestamp(1626106534))
     if player.players_photo_url:
         embed.set_thumbnail(url=player.players_photo_url)
 
     if player.data_birth:
-        embed.add_field(name="Born date:", value=f"{player.data_birth[0]}", inline=True)
+        embed.add_field(name="Born date:", value=f"{player.data_birth}", inline=True)
 
     if player.player_birth_city:
-        embed.add_field(name="Place:", value=f"{player.player_birth_city[0]}", inline=True)
+        embed.add_field(name="Place:", value=f"{player.player_birth_city}", inline=True)
 
     if player.player_born_name:
-        embed.add_field(name="Born name:", value=f"{player.player_born_name[0]}", inline=False)
+        embed.add_field(name="Born name:", value=f"{player.player_born_name}", inline=False)
 
     if player.player_career_length:
-        embed.add_field(name="Career length:", value=f"{player.player_career_length[0]}", inline=False)
+        embed.add_field(name="Career length:", value=f"{player.player_career_length}", inline=False)
 
     if player.player_height:
-        embed.add_field(name="Height:", value=player.player_height[0], inline=True)
+        embed.add_field(name="Height:", value=player.player_height, inline=True)
 
     if player.player_weight:
-        embed.add_field(name="Weight:", value=player.player_weight[0], inline=True)
+        embed.add_field(name="Weight:", value=player.player_weight, inline=True)
 
     return embed
 
