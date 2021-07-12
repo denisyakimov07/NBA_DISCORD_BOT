@@ -6,7 +6,7 @@ timezone_offset = 8.0  # Pacific Standard Time (UTC−08:00)
 tzinfo = datetime.timezone(datetime.timedelta(hours=timezone_offset))
 
 
-def player_data_card(player):
+def player_data_card(player, ctx):
     embed = discord.Embed(title=f"{player.player_name}",
                           colour=discord.Colour(0x9f57a8),
                           url=f"{player.url}",
@@ -15,6 +15,9 @@ def player_data_card(player):
 
     if player.players_photo_url:
         embed.set_thumbnail(url=player.players_photo_url)
+
+    if player.player_pronunciation:
+        embed.add_field(name="Pronunciation:", value=player.player_pronunciation, inline=False)
 
     if player.data_birth:
         embed.add_field(name="Born date:", value=f"{player.data_birth}", inline=True)
@@ -43,13 +46,12 @@ def player_data_card(player):
     if player.high_school:
         embed.add_field(name="School:", value=player.high_school, inline=True)
 
-    if player.player_pronunciation:
-        embed.add_field(name="Pronunciation:", value=player.player_pronunciation, inline=False)
-
     if player.player_hall_of_fame:
         embed.add_field(name="Hall_of_fame:", value=player.player_hall_of_fame, inline=False)
 
     if player.player_draft:
         embed.add_field(name="Draft:", value=player.player_draft, inline=False)
+
+    embed.set_footer(text=ctx.author, icon_url=f"{ctx.author.avatar_url}")
 
     return embed

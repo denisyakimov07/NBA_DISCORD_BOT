@@ -18,9 +18,19 @@ async def name(ctx: discord.ext.commands.Context):
     matches_names_list = spelling_check(names_list=get_player_name_and_list_from_db(), name=player_name)
     for i in get_user_list_data(matches_names_list):
         player = PlayerCard(i)
-        await ctx.send(embed=player_data_card(player))
+        await ctx.send(embed=player_data_card(player=player, ctx=ctx))
+        await ctx.message.delete()
 
 
+
+
+
+
+
+
+@client.command()
+async def clear(ctx: discord.ext.commands.Context, amount=0):
+    await ctx.channel.purge(limit=amount + 1)
 
 
 @client.event
