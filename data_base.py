@@ -42,11 +42,11 @@ class Player(Base):
 
 
 def get_player_name_and_list_from_db():
-    new_dict = {}
-    players = session.query(Player).options(load_only('id', 'player_name')).all()
+    new_list = []
+    players = session.query(Player).options(load_only('player_name')).all()
     for player in players:
-        new_dict.update({f"{player.player_name}": int(player.id)})
-    return new_dict
+        new_list.append(player.player_name)
+    return new_list
 
 
 def get_number_of_rows():
@@ -68,7 +68,7 @@ def get_user_list_data(matches_names) -> list:
 
 
 test_list = get_player_name_and_list_from_db()
-matches_names_list = spelling_check(names_list=test_list, name="Jaylen")
 
-for i in get_user_list_data(matches_names_list):
-    print(i)
+
+
+# matches_names_list = spelling_check(names_list=test_list, name="Jaylen")
