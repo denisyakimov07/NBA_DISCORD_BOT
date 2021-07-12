@@ -20,20 +20,20 @@ class PlayerCard:
         self.player_hall_of_fame = user_info_dict_to_class.get("player_hall_of_fame")
         self.players_photo_url = user_info_dict_to_class.get("players_photo_url")
 
-        print(self.player_name),
-        print(self.url),
-        print(self.player_pronunciation),
-        print(self.player_position),
-        print(self.player_shoots),
-        print(self.player_height),
-        print(self.player_weight),
-        print(self.data_birth),
-        print(self.player_birth_city),
-        print(self.player_college),
-        print(self.high_school),
-        print(self.player_draft),
-        print(self.player_nba_debut),
-        print(self.player_career_length),
-        print(self.player_born_name),
-        print(self.player_hall_of_fame),
+        print(self.player_name)
+        print(self.url)
+        print(self.player_pronunciation)
+        print(self.player_position)
+        print(self.player_shoots)
+        print(self.player_height)
+        print(self.player_weight)
+        print(self.data_birth)
+        print(self.player_birth_city)
+        print(self.player_college)
+        print(self.high_school)
+        print(self.player_draft)
+        print(self.player_nba_debut)
+        print(self.player_career_length)
+        print(self.player_born_name)
+        print(self.player_hall_of_fame)
         print(self.players_photo_url)
