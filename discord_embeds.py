@@ -2,8 +2,6 @@ import datetime
 
 import discord
 
-from environment import get_env
-
 timezone_offset = 8.0  # Pacific Standard Time (UTC−08:00)
 tzinfo = datetime.timezone(datetime.timedelta(hours=timezone_offset))
 
@@ -35,5 +33,14 @@ def player_data_card(player):
 
     if player.player_weight:
         embed.add_field(name="Weight:", value=player.player_weight, inline=True)
+
+    if player.player_nba_debut:
+        embed.add_field(name="Debut:", value=player.player_nba_debut, inline=False)
+
+    if player.player_college:
+        embed.add_field(name="College:", value=player.player_college, inline=True)
+
+    if player.high_school:
+        embed.add_field(name="School:", value=player.high_school, inline=True)
 
     return embed
