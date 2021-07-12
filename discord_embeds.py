@@ -43,4 +43,13 @@ def player_data_card(player):
     if player.high_school:
         embed.add_field(name="School:", value=player.high_school, inline=True)
 
+    if player.player_pronunciation:
+        embed.add_field(name="Pronunciation:", value=player.player_pronunciation, inline=False)
+
+    if player.player_hall_of_fame:
+        embed.add_field(name="Hall_of_fame:", value=player.player_hall_of_fame, inline=False)
+
+    if player.player_draft:
+        embed.add_field(name="Draft:", value=player.player_draft, inline=False)
+
     return embed
