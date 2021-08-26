@@ -11,7 +11,7 @@ def player_data_card(player, ctx):
                           colour=discord.Colour(0x9f57a8),
                           url=f"{player.url}",
                           description=f"```{player.player_position} - {player.player_shoots}```",
-                          timestamp=tzinfo)
+                          timestamp=datetime.datetime.now(tzinfo))
 
     if player.players_photo_url:
         embed.set_thumbnail(url=player.players_photo_url)
