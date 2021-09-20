@@ -41,12 +41,9 @@ class Player(Base):
     players_photo_url = Column(String(300))
 
 
-def get_player_name_and_list_from_db():
-    new_list = []
+def get_player_name_and_list_from_db() -> list[Player]:
     players = session.query(Player).options(load_only('player_name')).all()
-    for player in players:
-        new_list.append(player.player_name)
-    return new_list
+    return players
 
 
 def get_number_of_rows():
@@ -67,7 +64,10 @@ def get_user_list_data(matches_names) -> list:
     return player_data_list
 
 
-test_list = get_player_name_and_list_from_db()
+# test_list = get_player_name_and_list_from_db()
+
+# for i in test_list:
+#     print(i)
 
 
 
