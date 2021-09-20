@@ -35,6 +35,8 @@ async def clear(ctx: discord.ext.commands.Context, amount=0):
 
 @client.event
 async def on_ready():
+    channel = discord.Client.get_channel(765713378210611261)
+    await channel.send('ready-v0.05')
     print('ready-v0.05')
 
 
