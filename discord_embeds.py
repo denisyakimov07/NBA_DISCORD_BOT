@@ -94,8 +94,8 @@ def q1(player):
     if player.player_weight:
         embed.add_field(name="Weight:", value=player.player_weight, inline=True)
 
-    if player.player_nba_debut:
-        embed.add_field(name="Debut:", value=player.player_nba_debut, inline=False)
+    # if player.player_nba_debut:
+    #     embed.add_field(name="Debut:", value=player.player_nba_debut, inline=False)
 
     if player.player_college:
         embed.add_field(name="College:", value=player.player_college, inline=True)

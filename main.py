@@ -6,7 +6,7 @@ from discord.ext import commands
 
 from data_base import Quiz_Question, Session
 from data_base_function import get_user_list_data, get_player_name_and_list_from_db, get_players_draft_list_from_db, \
-    get_not_close_from_db
+    get_not_close_quiz_from_db, add_quiz_to_db
 from discord_embeds import player_data_card, q1
 from environment import get_env
 from fuz import spelling_check
@@ -31,30 +31,34 @@ async def name(ctx: discord.ext.commands.Context):
 
 @client.command()
 async def q(ctx: discord.ext.commands.Context):
-    if get_not_close_from_db() == None:
+    quiz =  get_not_close_quiz_from_db()
+    if quiz == None:
         player_for_q = random.choice(get_players_draft_list_from_db())
         message = await ctx.send(embed=q1(player=player_for_q))
 
         match = re.search('\d{4}', player_for_q.player_draft)
         year = match.group(0)
+        add_quiz_to_db(player_for_q=player_for_q, message=message, answer=year)
 
-        quiz = Quiz_Question()
-        quiz.player_id = player_for_q.id
-        quiz.message_id = message.id
-        quiz.right_answer = year
-        quiz.jump_url = message.jump_url
-
-        session = Session()
-        session.add(quiz)
-        session.commit()
-        session.close()
         await message.pin()
     else:
-        pass
+        await ctx.send(f"The quiz has already started go to {quiz.jump_url}")
 
         # mes = await ctx.fetch_message(id=889735210764234783)
         # print(mes.content)
 
+
+@client.command()
+async def g(ctx: discord.ext.commands.Context):
+    user_guess = str(ctx.message.content).replace("!g", "").strip()
+    quiz = get_not_close_quiz_from_db()
+    if str(quiz.right_answer) != str(user_guess):
+        await ctx.send(f"{ctx.message.author.name} - {user_guess} is wrong answer.")
+        await ctx.message.delete()
+
+    if str(quiz.right_answer) == str(user_guess):
+        await ctx.send(f"{ctx.message.author.name} - {user_guess} is right answer you win!")
+        await ctx.message.delete()
 
 
 

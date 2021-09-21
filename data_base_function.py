@@ -1,4 +1,4 @@
-from data_base import session, Player, Base, Quiz_Question
+from data_base import session, Player, Base, Quiz_Question, Session
 
 
 def get_player_name_and_list_from_db() -> list[Player]:
@@ -31,8 +31,19 @@ def create_new_tables(engine_db):
     Base.metadata.create_all(engine_db)
 # create_new_tables(engine)
 
-def get_not_close_from_db() -> Quiz_Question:
+def get_not_close_quiz_from_db() -> Quiz_Question:
     quiz_question = session.query(Quiz_Question).filter_by(status=False).first()
     return quiz_question
 
-print(get_not_close_from_db())
+
+def add_quiz_to_db(player_for_q,message,answer):
+    quiz = Quiz_Question()
+    quiz.player_id = player_for_q.id
+    quiz.message_id = message.id
+    quiz.right_answer = answer
+    quiz.jump_url = message.jump_url
+
+    session = Session()
+    session.add(quiz)
+    session.commit()
+    session.close()
