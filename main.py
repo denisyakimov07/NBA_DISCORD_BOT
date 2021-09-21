@@ -1,8 +1,12 @@
+import random
+
 import discord
 from discord.ext import commands
 
-from data_base import get_user_list_data, get_player_name_and_list_from_db
-from discord_embeds import player_data_card
+from data_base import Quiz_Question, Session
+from data_base_function import get_user_list_data, get_player_name_and_list_from_db, get_players_draft_list_from_db, \
+    get_not_close_from_db
+from discord_embeds import player_data_card, q1
 from environment import get_env
 from fuz import spelling_check
 from helper import PlayerCard
@@ -24,6 +28,26 @@ async def name(ctx: discord.ext.commands.Context):
 
 
 
+@client.command()
+async def q(ctx: discord.ext.commands.Context):
+    if get_not_close_from_db() == None:
+        player_for_q = random.choice(get_players_draft_list_from_db())
+        message = await ctx.send(embed=q1(player=player_for_q))
+        quiz = Quiz_Question()
+        quiz.player_id = player_for_q.id
+        quiz.message_id = message.id
+        session = Session()
+        session.add(quiz)
+        session.commit()
+        session.close()
+        await ctx.send(message.id)
+        await message.pin()
+
+        # mes = await ctx.fetch_message(id=889735210764234783)
+        # print(mes.content)
+
+
+
 
 
 
@@ -35,9 +59,15 @@ async def clear(ctx: discord.ext.commands.Context, amount=0):
 
 @client.event
 async def on_ready():
+    version = 'ready-v0.05'
     channel = client.get_channel(id=765713378210611261)
-    await channel.send('ready-v0.05')
-    print('ready-v0.05')
+    await channel.send(version)
+    print(version)
+
+
+@client.command()
+async def w(ctx: discord.ext.commands.Context):
+    print(get_not_close_from_db())
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import declarative_base, sessionmaker, load_only
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, BigInteger, Text
+from sqlalchemy.orm import declarative_base, sessionmaker
+
 
 from environment import get_env
 from fuz import spelling_check
@@ -40,29 +41,20 @@ class Player(Base):
     player_hall_of_fame = Column(String(300))
     players_photo_url = Column(String(300))
 
+class Quiz_Question(Base):
+    __tablename__ = 'quiz_question'
+    id = Column(Integer, primary_key=True)
+    player_id = Column(Integer)
+    status = Column(Boolean, default=False)
+    message_id = Column(BigInteger)
 
-def get_player_name_and_list_from_db() -> list[Player]:
-    players = session.query(Player).options(load_only('player_name')).all()
-    return players
-
-
-def get_number_of_rows():
-    rows = session.query(Player).count()
-    return rows
-
-
-def get_user_fom_db_by_name(player_name_) -> dict:
-    player_data_from_db = session.query(Player).filter_by(player_name=player_name_).all()
-    return player_data_from_db[0].__dict__
-
-
-def get_user_list_data(matches_names) -> list:
-    player_data_list = []
-    for name in matches_names:
-        player_data = get_user_fom_db_by_name(name)
-        player_data_list.append(player_data)
-    return player_data_list
-
+class Guess(Base):
+    __tablename__ = 'guess'
+    id = Column(Integer, primary_key=True)
+    player_id = Column(Integer)
+    status = Column(Boolean, default=False)
+    discord_user_id = Column(BigInteger)
+    user_guess = Column(Text)
 
 # test_list = get_player_name_and_list_from_db()
 
