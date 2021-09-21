@@ -32,5 +32,7 @@ def create_new_tables(engine_db):
 # create_new_tables(engine)
 
 def get_not_close_from_db() -> Quiz_Question:
-    quiz_question = session.query(Quiz_Question).filter_by(status=True).first()
+    quiz_question = session.query(Quiz_Question).filter_by(status=False).first()
     return quiz_question
+
+print(get_not_close_from_db())
