@@ -47,6 +47,8 @@ class Quiz_Question(Base):
     player_id = Column(Integer)
     status = Column(Boolean, default=False)
     message_id = Column(BigInteger)
+    right_answer = Column(String(300))
+    jump_url = Column(Text)
 
 class Guess(Base):
     __tablename__ = 'guess'

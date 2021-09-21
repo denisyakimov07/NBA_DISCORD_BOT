@@ -1,4 +1,5 @@
 import random
+import re
 
 import discord
 from discord.ext import commands
@@ -33,15 +34,23 @@ async def q(ctx: discord.ext.commands.Context):
     if get_not_close_from_db() == None:
         player_for_q = random.choice(get_players_draft_list_from_db())
         message = await ctx.send(embed=q1(player=player_for_q))
+
+        match = re.search('\d{4}', player_for_q.player_draft)
+        year = match.group(0)
+
         quiz = Quiz_Question()
         quiz.player_id = player_for_q.id
         quiz.message_id = message.id
+        quiz.right_answer = year
+        quiz.jump_url = message.jump_url
+
         session = Session()
         session.add(quiz)
         session.commit()
         session.close()
-        await ctx.send(message.id)
         await message.pin()
+    else:
+        pass
 
         # mes = await ctx.fetch_message(id=889735210764234783)
         # print(mes.content)
@@ -59,15 +68,10 @@ async def clear(ctx: discord.ext.commands.Context, amount=0):
 
 @client.event
 async def on_ready():
-    version = 'ready-v0.05'
+    version = 'ready-v0.06'
     channel = client.get_channel(id=765713378210611261)
     await channel.send(version)
     print(version)
-
-
-@client.command()
-async def w(ctx: discord.ext.commands.Context):
-    print(get_not_close_from_db())
 
 
 if __name__ == '__main__':
