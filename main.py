@@ -57,8 +57,11 @@ async def g(ctx: discord.ext.commands.Context):
         await ctx.message.delete()
 
     if str(quiz.right_answer) == str(user_guess):
+        quiz = get_not_close_quiz_from_db()
+        mes = await ctx.fetch_message(id=quiz.message_id)
         await ctx.send(f"{ctx.message.author.name} - {user_guess} is right answer you win!")
         await ctx.message.delete()
+        mes.unpin()
 
 
 
