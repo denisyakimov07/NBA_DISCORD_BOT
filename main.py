@@ -39,7 +39,25 @@ async def q(ctx: discord.ext.commands.Context):
         match = re.search('\d{4}', player_for_q.player_draft)
         year = match.group(0)
         add_quiz_to_db(player_for_q=player_for_q, message=message, answer=year)
+        test  = message.embeds[0].to_dict()
+        print(test)
+        print()
+        print(len(test))
+        print()
+        for i in test["fields"]:
+            print(i)
+        print()
+        for x in test:
+            print(x)
 
+
+        print(test["color"])
+        print(test["timestamp"])
+        print(test["type"])
+        print(test["description"])
+        print(test["title"])
+        # for c in test["fields"]["thumbnail"]:
+        #     print(c)
         await message.pin()
     else:
         await ctx.send(f"The quiz has already started go to {quiz.jump_url}")
@@ -63,7 +81,7 @@ async def g(ctx: discord.ext.commands.Context):
         await ctx.message.delete()
         quiz.status = True
         session.commit()
-        mes.unpin()
+        await mes.unpin()
 
 
 

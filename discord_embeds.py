@@ -58,7 +58,7 @@ def player_data_card(player, ctx):
     return embed
 
 
-def q1(player, users):
+def q1(player):
 
     embed = discord.Embed(title=f"What year was {player.player_name} drafted?",
                           colour=discord.Colour(0x9f57a8),
