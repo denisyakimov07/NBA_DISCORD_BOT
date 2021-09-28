@@ -1,0 +1,7 @@
+target_metadata = Base.metadata
+sqlalchemy.url = sqlite:///users.db
+
+
+
+alembic revision --autogenerate -m "comment"
+alembic upgrade head

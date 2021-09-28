@@ -1,4 +1,6 @@
-from data_base import session, Player, Base, Quiz_Question, Session
+import discord
+
+from data_base import session, Player, Base, Quiz_Question, Session, Guess
 
 
 def get_player_name_and_list_from_db() -> list[Player]:
@@ -45,5 +47,17 @@ def add_quiz_to_db(player_for_q,message,answer):
 
     session = Session()
     session.add(quiz)
+    session.commit()
+    session.close()
+
+def add_guess_to_db(discord_user: discord.Member , user_guess: str, quiz: Quiz_Question(), status = False):
+    guess = Guess()
+    guess.discord_user_id = discord_user.id
+    guess.user_guess = user_guess
+    guess.quiz_id = quiz.id
+    guess.status = status
+
+    session = Session()
+    session.add(guess)
     session.commit()
     session.close()

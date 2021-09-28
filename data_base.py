@@ -53,7 +53,7 @@ class Quiz_Question(Base):
 class Guess(Base):
     __tablename__ = 'guess'
     id = Column(Integer, primary_key=True)
-    player_id = Column(Integer)
+    quiz_id = Column(Integer)
     status = Column(Boolean, default=False)
     discord_user_id = Column(BigInteger)
     user_guess = Column(Text)

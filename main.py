@@ -6,7 +6,7 @@ from discord.ext import commands
 
 from data_base import Quiz_Question, Session, session
 from data_base_function import get_user_list_data, get_player_name_and_list_from_db, get_players_draft_list_from_db, \
-    get_not_close_quiz_from_db, add_quiz_to_db
+    get_not_close_quiz_from_db, add_quiz_to_db, add_guess_to_db
 from discord_embeds import player_data_card, q1
 from environment import get_env
 from fuz import spelling_check
@@ -72,6 +72,10 @@ async def g(ctx: discord.ext.commands.Context):
     quiz = get_not_close_quiz_from_db()
     if str(quiz.right_answer) != str(user_guess):
         await ctx.send(f"{ctx.message.author.name} - {user_guess} is wrong answer.")
+
+        discord_user: discord.Member = ctx.message.author
+        add_guess_to_db(discord_user = discord_user, user_guess = user_guess, quiz = quiz)
+
         await ctx.message.delete()
 
     if str(quiz.right_answer) == str(user_guess):
