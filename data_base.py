@@ -56,6 +56,7 @@ class Guess(Base):
     quiz_id = Column(Integer)
     status = Column(Boolean, default=False)
     discord_user_id = Column(BigInteger)
+    discord_user_name = Column(String(300))
     user_guess = Column(Text)
 
 # test_list = get_player_name_and_list_from_db()

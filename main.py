@@ -6,8 +6,8 @@ from discord.ext import commands
 
 from data_base import Quiz_Question, Session, session
 from data_base_function import get_user_list_data, get_player_name_and_list_from_db, get_players_draft_list_from_db, \
-    get_not_close_quiz_from_db, add_quiz_to_db, add_guess_to_db
-from discord_embeds import player_data_card, q1
+    get_not_close_quiz_from_db, add_quiz_to_db, add_guess_to_db, get_guess_to_db
+from discord_embeds import player_data_card, q1, wrong_guess
 from environment import get_env
 from fuz import spelling_check
 from helper import PlayerCard
@@ -39,31 +39,12 @@ async def q(ctx: discord.ext.commands.Context):
         match = re.search('\d{4}', player_for_q.player_draft)
         year = match.group(0)
         add_quiz_to_db(player_for_q=player_for_q, message=message, answer=year)
-        test  = message.embeds[0].to_dict()
-        print(test)
-        print()
-        print(len(test))
-        print()
-        for i in test["fields"]:
-            print(i)
-        print()
-        for x in test:
-            print(x)
 
-
-        print(test["color"])
-        print(test["timestamp"])
-        print(test["type"])
-        print(test["description"])
-        print(test["title"])
-        # for c in test["fields"]["thumbnail"]:
-        #     print(c)
         await message.pin()
     else:
         await ctx.send(f"The quiz has already started go to {quiz.jump_url}")
 
-        # mes = await ctx.fetch_message(id=889735210764234783)
-        # print(mes.content)
+
 
 
 @client.command()
@@ -75,6 +56,10 @@ async def g(ctx: discord.ext.commands.Context):
 
         discord_user: discord.Member = ctx.message.author
         add_guess_to_db(discord_user = discord_user, user_guess = user_guess, quiz = quiz)
+        user_guess_list = get_guess_to_db(quiz)
+        await ctx.send(embed=wrong_guess(user_guess_list))
+
+
 
         await ctx.message.delete()
 
@@ -100,8 +85,6 @@ async def clear(ctx: discord.ext.commands.Context, amount=0):
 @client.event
 async def on_ready():
     version = 'ready-v0.06'
-    channel = client.get_channel(id=765713378210611261)
-    await channel.send(version)
     print(version)
 
 

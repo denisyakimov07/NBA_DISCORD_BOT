@@ -2,6 +2,7 @@ import discord
 
 from data_base import session, Player, Base, Quiz_Question, Session, Guess
 
+from collections import defaultdict
 
 def get_player_name_and_list_from_db() -> list[Player]:
     players = session.query(Player).all()
@@ -53,6 +54,7 @@ def add_quiz_to_db(player_for_q,message,answer):
 def add_guess_to_db(discord_user: discord.Member , user_guess: str, quiz: Quiz_Question(), status = False):
     guess = Guess()
     guess.discord_user_id = discord_user.id
+    guess.discord_user_name = discord_user.name
     guess.user_guess = user_guess
     guess.quiz_id = quiz.id
     guess.status = status
@@ -61,3 +63,23 @@ def add_guess_to_db(discord_user: discord.Member , user_guess: str, quiz: Quiz_Q
     session.add(guess)
     session.commit()
     session.close()
+
+def get_guess_to_db(quiz: Quiz_Question()):
+
+    user_guess_list_object = session.query(Guess).filter_by(quiz_id = quiz.id).all()
+    users_list = [user_guess.discord_user_id for user_guess in user_guess_list_object]
+    user_guess_set = dict.fromkeys(set(users_list))
+    user_guess = [[user_guess.discord_user_id, user_guess.user_guess] for user_guess in user_guess_list_object]
+
+    for user in set(users_list):
+        ls = []
+        for x in user_guess:
+            if user == x[0]:
+                ls.append(x[1])
+        user_guess_set[user] = ls
+
+    return user_guess_set
+
+def get_discord_user_name(discord_user_id):
+    name = session.query(Guess).filter_by(discord_user_id = discord_user_id).first().discord_user_name
+    return name

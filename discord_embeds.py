@@ -3,6 +3,8 @@ import re
 
 import discord
 
+from data_base_function import get_discord_user_name
+
 timezone_offset = 8.0  # Pacific Standard Time (UTC−08:00)
 tzinfo = datetime.timezone(datetime.timedelta(hours=timezone_offset))
 
@@ -105,5 +107,14 @@ def q1(player):
 
     if player.player_hall_of_fame:
         embed.add_field(name="Hall_of_fame:", value=player.player_hall_of_fame, inline=False)
+
+    return embed
+
+
+def wrong_guess(user_guess_list):
+    embed = discord.Embed(colour=discord.Colour(0x3218ab))
+    for user_guess in user_guess_list:
+        value = str(user_guess_list[user_guess]).replace("[","").replace("]","").replace("'","")
+        embed.add_field(name=f"{get_discord_user_name(user_guess)} - {len(user_guess_list[user_guess])}", value=value, inline=False)
 
     return embed
