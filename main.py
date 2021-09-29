@@ -52,12 +52,16 @@ async def g(ctx: discord.ext.commands.Context):
     user_guess = str(ctx.message.content).replace("!g", "").strip()
     quiz = get_not_close_quiz_from_db()
     if str(quiz.right_answer) != str(user_guess):
-        await ctx.send(f"{ctx.message.author.name} - {user_guess} is wrong answer.")
-
+        await ctx.send(f"{ctx.message.author.name} - {user_guess} is incorrect.")
+        if quiz.discord_wrong_collect_mg_id:
+            old_message = await ctx.fetch_message(id=quiz.discord_wrong_collect_mg_id)
+            await old_message.delete()
         discord_user: discord.Member = ctx.message.author
         add_guess_to_db(discord_user = discord_user, user_guess = user_guess, quiz = quiz)
         user_guess_list = get_guess_to_db(quiz)
-        await ctx.send(embed=wrong_guess(user_guess_list))
+        message = await ctx.send(embed=wrong_guess(user_guess_list))
+        quiz.discord_wrong_collect_mg_id = message.id
+        session.commit()
 
 
 

@@ -49,6 +49,7 @@ class Quiz_Question(Base):
     message_id = Column(BigInteger)
     right_answer = Column(String(300))
     jump_url = Column(Text)
+    discord_wrong_collect_mg_id = Column(BigInteger)
 
 class Guess(Base):
     __tablename__ = 'guess'
