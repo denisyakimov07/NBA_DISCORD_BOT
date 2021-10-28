@@ -3,6 +3,7 @@ import re
 
 import discord
 
+from data_base import NBA_Player
 from data_base_function import get_discord_user_name
 
 timezone_offset = 8.0  # Pacific Standard Time (UTC−08:00)
@@ -60,15 +61,15 @@ def player_data_card(player, ctx):
     return embed
 
 
-def q1(player):
+def q1(player: NBA_Player):
 
-    embed = discord.Embed(title=f"What year was {player.player_name} drafted?",
-                          colour=discord.Colour(0x9f57a8),
-                          description=f"```Only accept numeric 4 number answers.```" ,
-                          timestamp=datetime.datetime.now(tzinfo))
-    match = re.search('\d{4}', player.player_draft)
-    year = match.group(0)
-    embed.add_field(name="res", value=year ,inline=False)
+    embed = discord.Embed(title = f"What year was {player.first_name} {player.last_name} drafted?",
+                          colour = discord.Colour(0x9f57a8),
+                          description = f"```Only accept numeric 4 number answers.```" ,
+                          timestamp = datetime.datetime.now(tzinfo))
+
+
+    embed.add_field(name="Answer ", value=player.draft_year ,inline=False)
 
 
 
@@ -96,17 +97,16 @@ def q1(player):
     if player.player_weight:
         embed.add_field(name="Weight:", value=player.player_weight, inline=True)
 
-    # if player.player_nba_debut:
-    #     embed.add_field(name="Debut:", value=player.player_nba_debut, inline=False)
-
     if player.player_college:
         embed.add_field(name="College:", value=player.player_college, inline=True)
 
     if player.high_school:
         embed.add_field(name="School:", value=player.high_school, inline=True)
 
-    if player.player_hall_of_fame:
-        embed.add_field(name="Hall_of_fame:", value=player.player_hall_of_fame, inline=False)
+    if player.hall_of_fame_year and player.hall_of_fame_type:
+        embed.add_field(name="Hall_of_fame:",
+                        value=f"{player.hall_of_fame_year} - {player.hall_of_fame_type}",
+                        inline=False)
 
     return embed
 
